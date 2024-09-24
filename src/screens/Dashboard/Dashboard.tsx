@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../../components/Header";
 import { IconButton } from "@mui/joy";
 import DrawerMobileNavigation from "../../components/Drawer";
 
@@ -7,8 +6,7 @@ function Dashboard() {
   const [opendrawer, setOpendrawer] = React.useState(false);
 
   return (
-    <div>
-      <Header />
+    <div style={{ marginTop: "100px" }}>
       <div>
         <IconButton
           // variant="outlined"

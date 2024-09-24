@@ -1,7 +1,70 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, Input, Typography } from "@mui/joy";
-import { StyledButtonGroup } from "@mui/joy/ButtonGroup/ButtonGroup";
+import { useMutation, UseMutationResult } from "react-query";
+import { login } from "./api";
+import { userInterface } from "../../schemas/user";
+import { setToken } from "./utils";
+
+function Login() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const useLogin = (): UseMutationResult<any, Error, userInterface> => {
+    return useMutation({
+      mutationFn: login,
+    });
+  };
+
+  const Loginmutation = useLogin();
+
+  const Login = () => {
+    if (!username || !password) {
+      return alert("Please enter username and password");
+    }
+
+    Loginmutation.mutate(
+      { username, password },
+      {
+        onSuccess: (data) => {
+          if (data && data.data) {
+            // showToastWithGravityAndOffset("Logged In!");
+            let obj = {
+              submembers: data.data.submembers,
+            };
+            console.log(obj);
+            setToken(data.data.token);
+          } else {
+            console.warn("Unexpected response format or empty data.");
+            // setError("Login failed: " + "Login failed: Unexpected response.");
+            // showErrorToast("Login failed: Unexpected response.");
+          }
+        },
+      }
+    );
+  };
+
+  return (
+    <StyledComponents.Container>
+      <StyledComponents.Box>
+        <StyledComponents.logincontainer>
+          <Typography>Login</Typography>
+          <Input placeholder="Username" />
+          <Input placeholder="Password" />
+          <Button onClick={Login} variant="solid" size="lg">
+            Login
+          </Button>
+        </StyledComponents.logincontainer>
+
+        <StyledComponents.loginintrocontainer>
+          <Typography>HL Mando!!!</Typography>
+          <Typography>Smart vPass</Typography>
+        </StyledComponents.loginintrocontainer>
+      </StyledComponents.Box>
+    </StyledComponents.Container>
+  );
+}
+
+export default Login;
 
 const StyledComponents = {
   Container: styled("div")({
@@ -71,27 +134,3 @@ const StyledComponents = {
     },
   }),
 };
-
-function Login() {
-  return (
-    <StyledComponents.Container>
-      <StyledComponents.Box>
-        <StyledComponents.logincontainer>
-          <Typography>Login</Typography>
-          <Input placeholder="Username" />
-          <Input placeholder="Password" />
-          <Button variant="solid" size="lg">
-            Login
-          </Button>
-        </StyledComponents.logincontainer>
-
-        <StyledComponents.loginintrocontainer>
-          <Typography>HL Mando!!!</Typography>
-          <Typography>Smart vPass</Typography>
-        </StyledComponents.loginintrocontainer>
-      </StyledComponents.Box>
-    </StyledComponents.Container>
-  );
-}
-
-export default Login;

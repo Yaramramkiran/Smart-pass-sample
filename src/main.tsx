@@ -1,10 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import ReactDOM from "react-dom/client"; // Import from the new ReactDOM client
+import "./index.css";
+import { Contextprovider } from "./context/appcontext.tsx";
+import Appnavigation from "./navigators/Appnavigation.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// Use ReactDOM.createRoot to render your app
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+
+const queryClient = new QueryClient();
+
+root.render(
+  <QueryClientProvider client={queryClient}>
+    <Contextprovider>
+      <Appnavigation />
+    </Contextprovider>
+  </QueryClientProvider>
+);

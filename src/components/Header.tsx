@@ -12,6 +12,11 @@ const StyledComponents = {
     color: "#333",
     fontSize: "24px",
     fontWeight: "bold",
+    position: "fixed",
+    width: "100%",
+    boxSizing: "border-box",
+    top: 0,
+    zIndex: 100,
   }),
 };
 function Header() {

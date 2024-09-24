@@ -7,8 +7,7 @@ function Transaction() {
   const [opendrawer, setOpendrawer] = React.useState(false);
 
   return (
-    <div>
-      <Header />
+    <div style={{ marginTop: "100px" }}>
       <div>
         <IconButton
           // variant="outlined"
